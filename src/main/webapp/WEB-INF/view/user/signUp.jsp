@@ -7,20 +7,20 @@
 	<div class="bg-light p-md-5 h-75">
 		<form action="/user/sign-up" method="post">
 			<div class="form-group">
-				<label for="username">User name:</label> <input type="text" class="form-control" placeholder="Enter username" id="username">
+				<label for="username">User name:</label> <input type="text" class="form-control" placeholder="Enter username" id="username" name="username">
 			</div>
 			<div class="form-group">
-				<label for="pwd">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+				<label for="password">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
 			</div>
 			<div class="form-group">
-				<label for="fullname">fullname:</label> <input type="text" class="form-control" placeholder="Enter fullname" id="fullname">
+				<label for="fullname">fullname:</label> <input type="text" class="form-control" placeholder="Enter fullname" id="fullname" name="fullname">
 			</div>
 			<div class="form-group form-check">
 				<label class="form-check-label"> <input class="form-check-input" type="checkbox"> Remember me
 				</label>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary">회원가입</button>
 		</form>
 	</div>
 	<br>

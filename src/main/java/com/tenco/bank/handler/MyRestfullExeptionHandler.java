@@ -1,9 +1,12 @@
 package com.tenco.bank.handler;
 
+import javax.tools.DocumentationTool.Location;
+
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.tenco.bank.handler.exception.CustomRestfullException;
+import com.tenco.bank.handler.exception.UnAuthorizedException;
 
 /**
  * 예외 시 데이터를 내려 줄 수 있다.
@@ -28,4 +31,16 @@ public class MyRestfullExeptionHandler {
 		sb.append("</script>");
 		return sb.toString();
 	}
+	@ExceptionHandler(UnAuthorizedException.class)
+	public String unAuthorizedException(UnAuthorizedException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		// 반드시 마지막에 세미콜론을 붙여서 사용하자.
+		sb.append("alert('"+ e.getMessage() +"');");
+		sb.append("location.href='/user/sign-in';");
+		sb.append("</script>");
+		return sb.toString();
+	}
+	
+	
 }
