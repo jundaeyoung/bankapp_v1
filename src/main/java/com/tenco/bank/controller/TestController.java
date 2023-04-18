@@ -11,12 +11,6 @@ public class TestController {
 	@GetMapping("/main")
 	public String mainTest() {
 		
-		// ViewResolver 동작
-		// prefix: /WEB-INF/view/
-		// subfix: .jsp
-		// /WEB-INF/view/layout/main.jsp
-		// -> layout/main
-		//파일 이름 리턴 처리
 		return "layout/main";
 	}
 }

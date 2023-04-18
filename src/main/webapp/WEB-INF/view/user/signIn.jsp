@@ -7,10 +7,10 @@
 	<div class="bg-light p-md-5 h-75">
 		<form action="/user/sign-in" method="post">
 			<div class="form-group">
-				<label for="username">User name:</label> <input type="text" class="form-control" placeholder="Enter username" id="username">
+				<label for="username">User name:</label> <input type="text" class="form-control" placeholder="Enter username" id="username" name="username">
 			</div>
 			<div class="form-group">
-				<label for="pwd">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+				<label for="pwd">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="pwd">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
