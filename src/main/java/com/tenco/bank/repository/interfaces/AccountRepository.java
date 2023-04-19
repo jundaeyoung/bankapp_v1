@@ -15,8 +15,8 @@ public interface AccountRepository {
 
 	public int delteById(int id);
 
-	public Account findById(); 
+	public Account findById(int id);
 
-	public List<Account> findAll(int id); // 관리자용
-	
-	}
+	public List<Account> findAll(); // 관리자용
+
+}
