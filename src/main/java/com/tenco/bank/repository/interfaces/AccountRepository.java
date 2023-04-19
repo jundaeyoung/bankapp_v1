@@ -10,13 +10,11 @@ import com.tenco.bank.repository.model.Account;
 public interface AccountRepository {
 
 	public int insert(Account account);
-
 	public int updateById(Account account);
-
 	public int delteById(int id);
 
 	public Account findById(int id);
-
 	public List<Account> findAll(); // 관리자용
 
+	public List<Account> findByUserId(Integer userId);
 }
