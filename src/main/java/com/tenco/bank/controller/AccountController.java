@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tenco.bank.dto.DepositFormDto;
 import com.tenco.bank.dto.SaveFormDto;
 import com.tenco.bank.dto.WithdrawFormDto;
 import com.tenco.bank.handler.exception.CustomPageException;
@@ -28,7 +29,7 @@ public class AccountController {
 	@Autowired
 	private HttpSession session;
 
-	@Autowired 
+	@Autowired
 	private AccountService accountService;
 	// todo
 	// 계좌 목록 페이지
@@ -104,13 +105,41 @@ public class AccountController {
 		// todo 서비스 호출 예정
 		accountService.updateAccountWithdraw(withdrawFormDto, principal.getId());
 		return "redirect:/account/list";
-		
+
 	}
 
 	// 입금 페이지
 	@GetMapping("/deposit")
 	public String deposit() {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (principal == null) {
+			throw new UnAuthorizedException("로그인 먼저 해주세요.", HttpStatus.UNAUTHORIZED);
+		}
 		return "/account/depositForm";
+	}
+
+	@PostMapping("/deposit-proc")
+	public String depositProc(DepositFormDto depositFormDto) {
+		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (principal == null) {
+			throw new UnAuthorizedException("로그인 먼저 해주세요.", HttpStatus.UNAUTHORIZED);
+		}
+		if (depositFormDto.getAmount() == null) {
+			throw new CustomPageException("금액을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if (depositFormDto.getAmount().longValue() <= 0) {
+			throw new CustomPageException("금액이 0원 이하일 수 없습니다.", HttpStatus.BAD_REQUEST);
+		}
+		if (depositFormDto.getDAccountNumber() == null || depositFormDto.getDAccountNumber().isEmpty()) {
+			throw new CustomPageException("계좌 번호를 입력하세요.", HttpStatus.BAD_REQUEST);
+		}
+
+		// todo
+		// 서비스 호출
+		accountService.updateAccountDeposit(depositFormDto);
+
+		return "redirect:/account/list";
 	}
 
 	// 이체 페이지
