@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tenco.bank.dto.SaveFormDto;
+import com.tenco.bank.dto.WithdrawFormDto;
 import com.tenco.bank.handler.exception.CustomPageException;
 import com.tenco.bank.handler.exception.CustomRestfullException;
 import com.tenco.bank.handler.exception.UnAuthorizedException;
@@ -27,7 +28,7 @@ public class AccountController {
 	@Autowired
 	private HttpSession session;
 
-	@Autowired
+	@Autowired 
 	private AccountService accountService;
 	// todo
 	// 계좌 목록 페이지
@@ -54,15 +55,15 @@ public class AccountController {
 //			throw new CustomRestfullException("인증된 사용자가 아닙니다.", HttpStatus.UNAUTHORIZED);
 			throw new UnAuthorizedException("로그인 먼저 해주세요.", HttpStatus.UNAUTHORIZED);
 		}
-		
+
 		// View 화면으로 데이터를 내려주는 기술
 		// Model과 ModelAndView 를 활용
 		List<Account> accountList = accountService.readAccountList(principal.getId());
-		if(accountList.isEmpty()) {
-			model.addAttribute("accountList",null);
-		}else {
-			model.addAttribute("accountList",accountList);
-			
+		if (accountList.isEmpty()) {
+			model.addAttribute("accountList", null);
+		} else {
+			model.addAttribute("accountList", accountList);
+
 		}
 
 		return "/account/list";
@@ -72,7 +73,38 @@ public class AccountController {
 	@GetMapping("/withdraw")
 	public String withdraw() {
 
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (principal == null) {
+			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
+		}
+
 		return "/account/withdrawForm";
+	}
+
+	// 출금 처리 기능
+	@PostMapping("/withdraw-proc")
+	public String withdrawProc(WithdrawFormDto withdrawFormDto) {
+		// 유효성 검사
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (principal == null) {
+			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
+		}
+		if (withdrawFormDto.getAmount() == null) {
+			throw new CustomRestfullException("금액을 입력하세요.", HttpStatus.BAD_REQUEST);
+		}
+		if (withdrawFormDto.getAmount().longValue() <= 0) {
+			throw new CustomRestfullException("출금액이 0원 이하일 수는 없습니다.", HttpStatus.BAD_REQUEST);
+		}
+		if (withdrawFormDto.getWAccountNumber() == null || withdrawFormDto.getWAccountNumber().isEmpty()) {
+			throw new CustomRestfullException("계좌 번호를 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if (withdrawFormDto.getWAccountPassword() == null || withdrawFormDto.getWAccountPassword().isEmpty()) {
+			throw new CustomRestfullException("계좌 비밀번호를 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		// todo 서비스 호출 예정
+		accountService.updateAccountWithdraw(withdrawFormDto, principal.getId());
+		return "redirect:/account/list";
+		
 	}
 
 	// 입금 페이지

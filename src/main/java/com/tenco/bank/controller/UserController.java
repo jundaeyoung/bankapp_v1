@@ -62,7 +62,7 @@ public class UserController {
 	 * 로그인 처리
 	 */
 	@GetMapping("/sign-in")
-	public String signIn(SignUpFormDto signUpFormDto) {
+	public String signIn() {
 		// 1. 유효성 검사
 		return "/user/signIn";
 	}
@@ -92,7 +92,7 @@ public class UserController {
 		principal.setPassword(null);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
-		return "/account/list";
+		return "redirect:/account/list";
 	}
 	
 	@GetMapping("/logout")
