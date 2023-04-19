@@ -15,6 +15,7 @@ import com.tenco.bank.handler.exception.CustomRestfullException;
 import com.tenco.bank.handler.exception.UnAuthorizedException;
 import com.tenco.bank.repository.model.User;
 import com.tenco.bank.service.AccountService;
+import com.tenco.bank.utils.Define;
 
 @Controller
 @RequestMapping("/account")
@@ -44,7 +45,7 @@ public class AccountController {
 	public String list() {
 
 		// 인증검사 처리
-		User principal = (User) session.getAttribute("principal");
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
 //			throw new CustomRestfullException("인증된 사용자가 아닙니다.", HttpStatus.UNAUTHORIZED);
 			throw new UnAuthorizedException("로그인 먼저 해주세요.", HttpStatus.UNAUTHORIZED);
@@ -76,23 +77,22 @@ public class AccountController {
 	@GetMapping("/save")
 	public String save() {
 		// 인증 검사 처리
-		User user = (User) session.getAttribute("principal");
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
 		}
 		return "/account/saveForm";
 	}
-	
+
 	/**
-	 * 계좌 생성 
-	 * 인증 검사 처리
-	 * 유효성 검사 처리 - 0 원 입력 가능, 마이너스 입력 불가
+	 * 계좌 생성 인증 검사 처리 유효성 검사 처리 - 0 원 입력 가능, 마이너스 입력 불가
+	 * 
 	 * @param saveFormDto
 	 * @return 계좌 목록 페이지
 	 */
 	@PostMapping("/save-proc")
 	public String saveProc(SaveFormDto saveFormDto) {
-		User user = (User) session.getAttribute("principal");
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
 		}
