@@ -9,17 +9,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tenco.bank.dto.DepositFormDto;
 import com.tenco.bank.dto.SaveFormDto;
 import com.tenco.bank.dto.TransferFormDto;
 import com.tenco.bank.dto.WithdrawFormDto;
+import com.tenco.bank.dto.response.HistoryDto;
 import com.tenco.bank.handler.exception.CustomPageException;
 import com.tenco.bank.handler.exception.CustomRestfullException;
 import com.tenco.bank.handler.exception.UnAuthorizedException;
 import com.tenco.bank.repository.model.Account;
+import com.tenco.bank.repository.model.History;
 import com.tenco.bank.repository.model.User;
 import com.tenco.bank.service.AccountService;
 import com.tenco.bank.utils.Define;
@@ -174,7 +178,7 @@ public class AccountController {
 			throw new CustomRestfullException("출금 계좌 비밀번호를 입력하세요.", HttpStatus.BAD_REQUEST);
 		}
 		// 4. 이체 금액 입력 여부
-		if(transferFormDto.getAmount()==null) {
+		if (transferFormDto.getAmount() == null) {
 			throw new CustomRestfullException("이체 금액을 입력해주세요.", HttpStatus.BAD_REQUEST);
 		}
 		// 4. 이체 금액 0원 이상 확인
@@ -229,9 +233,27 @@ public class AccountController {
 	}
 
 	// 계좌 상세 보기 페이지
-	@GetMapping("/detail")
-	public String detail() {
-		return "/account/detailForm";
+	@GetMapping("/detail/{id}")
+	public String detail(@PathVariable Integer id,
+			@RequestParam(name = "type", defaultValue = "all", required = false) String type, Model model) {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (session.getAttribute(Define.PRINCIPAL) == null) {
+			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
+		}
+		System.out.println("type"+type);
+		Account account = accountService.readAccount(id);
+		// 거래 내역 결과 집함 = 서비스.메서드();
+		List<HistoryDto> historyList = accountService.readHistoryListByAccount(type, id);
+
+		// 화면을 구성하기 위해 필요한 데이터
+		// 소유자 이름
+		// 계좌 번호 (1개계좌의 상세보기)
+		// 계좌 잔액
+		// 거래 내역
+		model.addAttribute("principal", principal);
+		model.addAttribute("account", account);
+		model.addAttribute("historyList", historyList);
+		return "/account/detail";
 	}
 
 }
