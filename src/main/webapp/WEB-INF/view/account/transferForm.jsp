@@ -5,7 +5,7 @@
 	<h2>이체 페이지(인증)</h2>
 	<h5>어서오세요 환영합니다.</h5>
 	<div class="bg-light p-md-5 h-75">
-		<form action="/account/withdraw" method="post">
+		<form action="/account/transfer-proc" method="post">
 			<div class="form-group">
 				<label for="amount">이체 금액:</label> <input type="text" class="form-control" placeholder="이체 금액을 입력하시오." id="amount" name="amount">
 			</div>
@@ -13,12 +13,12 @@
 				<label for="wAccountNumber">출금계좌번호:</label> <input type="text" class="form-control" placeholder="출금계좌번호를 입력하시오." id="wAccountNumber" name="wAccountNumber">
 			</div>
 			<div class="form-group">
-				<label for="wAccountPassword">출금계좌비밀번호:</label> <input type="password" class="form-control" placeholder="출금계좌비밀번호 입력하시오." id="wAccountPassword" name="wAccountPassword">
-			</div>
-			<div class="form-group">
 				<label for="dAccountNumber">입금계좌번호:</label> <input type="text" class="form-control" placeholder="입금계좌번호를 입력하시오." id="dAccountNumber" name="dAccountNumber">
 			</div>
-			<button type="submit" class="btn btn-primary">송금</button>
+			<div class="form-group">
+				<label for="wAccountPassword">출금계좌비밀번호:</label> <input type="password" class="form-control" placeholder="출금계좌비밀번호 입력하시오." id="wAccountPassword" name="wAccountPassword">
+			</div>
+			<button type="submit" class="btn btn-primary">이체하기</button>
 		</form>
 	</div>
 	<br>

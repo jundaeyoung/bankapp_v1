@@ -18,7 +18,7 @@
 		<h1 class="m--title">
 			<b>My Bank</b>
 		</h1>
-		<img alt="sample" src="https://picsum.photos/300/200">
+		<!--  <img alt="sample" src="https://picsum.photos/300/200"> -->
 	</div>
 
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -52,7 +52,7 @@
 				<h3>Some Links</h3>
 				<p>Lorem ipsum dolor sit ame.</p>
 				<ul class="nav nav-pills flex-column">
-			 	
+
 					<li class="nav-item"><a class="nav-link" href="/account/save">계좌 생성</a></li>
 					<li class="nav-item"><a class="nav-link" href="/account/list">계좌 목록</a></li>
 					<li class="nav-item"><a class="nav-link" href="/account/withdraw">출금</a></li>
