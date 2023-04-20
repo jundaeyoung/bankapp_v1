@@ -173,6 +173,10 @@ public class AccountController {
 		if (transferFormDto.getWAccountPassword() == null || transferFormDto.getWAccountPassword().isEmpty()) {
 			throw new CustomRestfullException("출금 계좌 비밀번호를 입력하세요.", HttpStatus.BAD_REQUEST);
 		}
+		// 4. 이체 금액 입력 여부
+		if(transferFormDto.getAmount()==null) {
+			throw new CustomRestfullException("이체 금액을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
 		// 4. 이체 금액 0원 이상 확인
 		if (transferFormDto.getAmount().longValue() <= 0) {
 			throw new CustomRestfullException("이체 금액이 0원 이하일 수는 없습니다.", HttpStatus.BAD_REQUEST);
