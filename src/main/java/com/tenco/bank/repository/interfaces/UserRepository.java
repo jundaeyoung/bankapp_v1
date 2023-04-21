@@ -22,7 +22,9 @@ public interface UserRepository {
 	public User findById(Integer id);
 
 	public List<User> findAll();
-	
+
 	// 추가 작업
 	public User findByUsernameAndPassword(SignInFormDto signInFormDto);
+
+	public User findByUsername(SignInFormDto signInFormDto);
 }// end of class

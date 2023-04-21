@@ -32,6 +32,9 @@ dependencies {
 	
 	// 커넥트 J 연결
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	
+	// 암호화
+	implementation 'org.springframework.security:spring-security-crypto'
 }
 
 tasks.named('test') {
