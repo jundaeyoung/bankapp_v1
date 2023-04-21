@@ -98,7 +98,6 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();// 세션 값 지워줌
-		
 		return "redirect:/user/sign-in";
 	}
 

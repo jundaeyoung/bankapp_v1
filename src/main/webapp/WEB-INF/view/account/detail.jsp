@@ -40,8 +40,8 @@
 						<td>${history.formatCreatedAt()}</td>
 						<td>${history.sender}</td>
 						<td>${history.receiver}</td>
-						<td>${history.amount}원</td>
-						<td>${history.formatBalance()}</td>
+						<td>${account.formatMoney(history.amount)}</td>
+						<td>${account.formatMoney(history.balance)}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

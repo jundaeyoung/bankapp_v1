@@ -20,9 +20,4 @@ public class HistoryDto {
 		return TimestampUtil.timestampToString(createdAt);
 	}
 
-	public String formatBalance() {
-		DecimalFormat df = new DecimalFormat("###,###");
-		String formatNumber = df.format(balance);
-		return formatNumber + "원";
-	}
 }
