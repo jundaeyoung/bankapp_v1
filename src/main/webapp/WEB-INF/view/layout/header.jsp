@@ -56,7 +56,7 @@
 				<c:choose>
 					<c:when test="${principal!=null}">
 						<!-- 사용자 이미지 or 사용자 이미지 등록 안함 -->
-						<img alt=""
+						<img class="m--profile" alt=""
 							src=" <c:url value="${principal.setUpUserImage()}"/>">
 					</c:when>
 					<c:otherwise>
